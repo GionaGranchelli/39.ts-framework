@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "outDir": "dist",
+    "rootDir": "./",
+    "baseUrl": "."
+  },
+  "include": [
+    "commands/**/*",
+    "bin/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "templates",
+    "dist"
+  ]
+}

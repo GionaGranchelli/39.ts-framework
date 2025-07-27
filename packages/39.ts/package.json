@@ -1,0 +1,46 @@
+{
+  "name": "39.ts",
+  "version": "0.1.0",
+  "description": "A lightweight TypeScript-native UI framework with signal-based state and DOM primitives.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./styles": "./dist/styles/index.css",
+    "./styles/base": "./dist/styles/base.css",
+    "./styles/layout": "./dist/styles/layout.css",
+    "./styles/form": "./dist/styles/form.css",
+    "./styles/utility": "./dist/styles/utility.css",
+    "./core/*": "./core/*.ts",
+    "./components/*": "./components/*.ts",
+    "./html/*": "./dom/*.ts"
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.json && cp -r styles dist/styles",
+    "clean": "rm -rf dist",
+    "prepare": "npm run clean && npm run build"
+  },
+  "keywords": [
+    "typescript",
+    "ui-framework",
+    "dom",
+    "signals",
+    "reactivity",
+    "minimal"
+  ],
+  "author": "Giona Granchelli",
+  "license": "MIT",
+  "files": [
+    "dist",
+    "core",
+    "components",
+    "html",
+    "index.ts"
+  ],
+  "devDependencies": {
+    "typescript": "^5.3.0"
+  }
+}

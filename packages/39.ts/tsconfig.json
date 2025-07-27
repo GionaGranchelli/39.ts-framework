@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "declaration": true,
+    "declarationDir": "dist",
+    "outDir": "dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": [
+    "index.ts",
+    "core/**/*",
+    "dom/**/*",
+    "components/**/*",
+    "storage/**/*",
+    "@types/**/*",
+  ],
+  "exclude": [
+    "dist",
+    "node_modules",
+    "../39.starter/**"
+  ]
+}
