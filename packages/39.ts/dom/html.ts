@@ -90,3 +90,27 @@ export const Img = (props: Props, children: Children[]) => {
     const [normalizedProps, normalizedChildren] = normalizeArgs(props, children)
     return h('img', normalizedProps, normalizedChildren);
 }
+
+// Main html export object containing all element functions
+export const html = {
+    Div,
+    Span,
+    Button,
+    H1, H2, H3,
+    Textarea,
+    Select,
+    Paragraph,
+    Section,
+    Input,
+    Label,
+    Nav,
+    Aside,
+    P,
+    Header,
+    Option,
+    Ul, Li,
+    Footer,
+    Main,
+    A,
+    Img
+};

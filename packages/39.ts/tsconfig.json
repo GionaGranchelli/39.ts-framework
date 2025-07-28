@@ -7,23 +7,26 @@
     "declaration": true,
     "declarationMap": true,
     "outDir": "dist",
-    "rootDir": ".",          // so index.ts → dist/index.js
+    "rootDir": ".",
     "strict": true,
     "composite": true,
     "allowImportingTsExtensions": false,
     "noEmit": false
   },
   "include": [
-    "index.ts",
-    "core/**/*",
-    "dom/**/*",
-    "components/**/*",
-    "storage/**/*",
-    "@types/**/*"
+    "*.ts",
+    "core/**/*.ts",
+    "dom/**/*.ts",
+    "components/**/*.ts",
+    "storage/**/*.ts",
+    "@types/**/*.ts"
   ],
   "exclude": [
     "dist",
     "node_modules",
+    "**/*.test.ts",
+    "**/*.bench.ts",
+    "vitest.config.ts",
     "../39.starter/**"
   ]
 }

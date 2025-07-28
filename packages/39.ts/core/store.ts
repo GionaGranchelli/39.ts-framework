@@ -63,3 +63,10 @@ export async function createStore<T extends Record<string, any>>(config: StoreCo
         get
     };
 }
+
+/**
+ * Create a selector for store state
+ */
+export function createStoreSelector<T, R>(store: Store<T>, selector: (state: T) => R) {
+    return createSignal(selector(store.state.get()));
+}

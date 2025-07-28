@@ -2,7 +2,7 @@
 import { createSignal } from './signal';
 import { h } from '../dom/h';
 
-export function createList<T>(
+export function createSignalList<T>(
     initial: T[],
     renderItem: (item: T, index: number) => HTMLElement,
     tag: keyof HTMLElementTagNameMap = 'div'
@@ -37,3 +37,6 @@ export function createList<T>(
         },
     };
 }
+
+// Legacy alias for backward compatibility
+export const createList = createSignalList;

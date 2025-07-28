@@ -11,7 +11,7 @@ const getInitialPath = () => {
 export const currentRoute = createSignal<string>(getInitialPath());
 export const currentRouteParams = createSignal<Record<string, string>>({});
 
-export function createRouter(path: string, component: () => HTMLElement | Promise<HTMLElement>,
+export function createRoute(path: string, component: () => HTMLElement | Promise<HTMLElement>,
                              name: string, icon: string = '🏠',
                              segments: string[] = []): Route {
     return {
@@ -80,6 +80,13 @@ export class Router {
 
     getRoutes(): Route[] {
         return this.routes;
+    }
+
+    addRoute(route: Route) {
+        this.routes.push({
+            ...route,
+            segments: route.path.split('/').filter(Boolean)
+        });
     }
 
     registerRoutes(routes: Route[]) {
@@ -174,5 +181,46 @@ export class Router {
     private capitalize(s: string) {
         return s.charAt(0).toUpperCase() + s.slice(1);
     }
+}
 
+// Global router instance
+let globalRouter: Router | null = null;
+
+/**
+ * Create a router instance
+ */
+export function createRouter(container: HTMLElement): Router {
+    globalRouter = new Router(container);
+    return globalRouter;
+}
+
+/**
+ * Get the global router instance
+ */
+export const router = {
+    navigate: (path: string) => {
+        if (!globalRouter) {
+            throw new Error('Router not initialized. Call createRouter() first.');
+        }
+        globalRouter.navigate(path);
+    },
+    replace: (path: string) => {
+        if (!globalRouter) {
+            throw new Error('Router not initialized. Call createRouter() first.');
+        }
+        globalRouter.replace(path);
+    },
+    addRoute: (route: Route) => {
+        if (!globalRouter) {
+            throw new Error('Router not initialized. Call createRouter() first.');
+        }
+        globalRouter.addRoute(route);
+    }
+};
+
+/**
+ * Navigate to a path
+ */
+export function navigateTo(path: string): void {
+    router.navigate(path);
 }
