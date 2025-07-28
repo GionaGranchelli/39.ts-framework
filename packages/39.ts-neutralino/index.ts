@@ -4,3 +4,11 @@ export type { NeutralinoContextState, NeutralinoContextValue } from './context/N
 
 // Re-export Neutralino API types
 export * from './api/neutralino.d.js';
+
+// Export hooks
+export { useFileSystem } from './hooks/useFileSystem.js';
+export type {
+  FileSystemError,
+  FileOperation,
+  UseFileSystemReturn
+} from './hooks/useFileSystem.js';

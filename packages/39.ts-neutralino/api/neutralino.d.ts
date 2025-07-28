@@ -5,30 +5,58 @@
  * @see https://neutralino.js.org/docs/api/overview
  */
 
+export interface NeutralinoFileStats {
+  size: number;
+  isFile: boolean;
+  isDirectory: boolean;
+  createdAt: number;
+  modifiedAt: number;
+}
+
 export interface NeutralinoFileSystem {
   /**
    * Reads a file from the filesystem.
    * @param path Absolute or relative file path
-   * @returns Promise resolving to file content (string or ArrayBuffer)
+   * @returns Promise resolving to file content as string
    */
-  readFile(path: string): Promise<string | ArrayBuffer>;
+  readFile(path: string): Promise<string>;
 
   /**
-   * Writes data to a file.
+   * Reads a binary file from the filesystem.
+   * @param path Absolute or relative file path
+   * @returns Promise resolving to file content as ArrayBuffer
+   */
+  readBinaryFile(path: string): Promise<ArrayBuffer>;
+
+  /**
+   * Writes text data to a file.
    * @param path File path
    * @param data Content to write
    * @returns Promise<void>
    */
-  writeFile(path: string, data: string | ArrayBuffer): Promise<void>;
+  writeFile(path: string, data: string): Promise<void>;
+
+  /**
+   * Writes binary data to a file.
+   * @param path File path
+   * @param data Binary content to write
+   * @returns Promise<void>
+   */
+  writeBinaryFile(path: string, data: ArrayBuffer): Promise<void>;
 
   /**
    * Deletes a file.
    * @param path File path
    * @returns Promise<void>
    */
-  deleteFile(path: string): Promise<void>;
+  removeFile(path: string): Promise<void>;
 
-  // ...other methods as per Neutralino.js FileSystem API
+  /**
+   * Gets file statistics.
+   * @param path File path
+   * @returns Promise resolving to file stats
+   */
+  getStats(path: string): Promise<NeutralinoFileStats>;
 }
 
 export interface NeutralinoWindow {
@@ -50,18 +78,14 @@ export interface NeutralinoWindow {
   // ...other methods as per Neutralino.js Window API
 }
 
-export interface Neutralino {
+export interface NeutralinoAPI {
   filesystem: NeutralinoFileSystem;
   window: NeutralinoWindow;
-  // ...other APIs (os, app, etc.)
 }
 
-/**
- * Global Neutralino object
- */
+// Global window extension
 declare global {
   interface Window {
-    Neutralino?: Neutralino;
+    Neutralino?: NeutralinoAPI;
   }
 }
-
