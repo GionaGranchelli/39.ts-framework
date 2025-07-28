@@ -12,3 +12,9 @@ export type {
   FileOperation,
   UseFileSystemReturn
 } from './hooks/useFileSystem.js';
+
+export { useWindowState } from './hooks/useWindowState.js';
+export type {
+  WindowError,
+  UseWindowStateReturn
+} from './hooks/useWindowState.js';

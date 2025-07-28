@@ -3,6 +3,8 @@
  * Provides context state for Neutralino.js integration.
  */
 
+import type { NeutralinoAPI } from '../api/neutralino.d.js';
+
 export interface NeutralinoContextState {
   /** True if running inside Neutralino.js */
   isNeutralino: boolean;
@@ -20,5 +22,8 @@ export interface NeutralinoContextState {
 export interface NeutralinoContextValue extends NeutralinoContextState {
   /** Refreshes Neutralino state (re-checks environment) */
   refresh(): void;
+  /** Check if Neutralino is available and ready */
+  isNeutralinoAvailable(): boolean;
+  /** Get the Neutralino API instance */
+  api(): NeutralinoAPI | null;
 }
-

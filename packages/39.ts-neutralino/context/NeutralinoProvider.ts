@@ -9,7 +9,8 @@
  * This is NOT a React context. It uses 39.ts signals for state management.
  */
 import { createSignal } from '39.ts';
-import type { NeutralinoContextState, NeutralinoContextValue } from './NeutralinoContext.types';
+import type { NeutralinoContextState, NeutralinoContextValue } from './NeutralinoContext.types.js';
+import type { NeutralinoAPI } from '../api/neutralino.d.js';
 
 // Internal signal for context state
 const neutralinoSignal = createSignal<NeutralinoContextState>({
@@ -52,6 +53,30 @@ export function NeutralinoProvider() {
 }
 
 /**
+ * Check if Neutralino is available and ready for use
+ */
+function isNeutralinoAvailable(): boolean {
+  const state = neutralinoSignal.get();
+  return state.isNeutralino && state.ready && !state.error;
+}
+
+/**
+ * Get the Neutralino API instance if available
+ */
+function getNeutralinoAPI(): NeutralinoAPI | null {
+  if (!isNeutralinoAvailable()) {
+    return null;
+  }
+
+  try {
+    const neutralino = typeof window !== 'undefined' ? (window as any).Neutralino : undefined;
+    return neutralino || null;
+  } catch {
+    return null;
+  }
+}
+
+/**
  * Accessor for Neutralino context state
  * @returns Current context state (signal)
  */
@@ -60,6 +85,7 @@ export function useNeutralinoContext(): NeutralinoContextValue {
   return {
     ...state,
     refresh: () => NeutralinoProvider().refresh(),
+    isNeutralinoAvailable,
+    api: getNeutralinoAPI,
   };
 }
-
