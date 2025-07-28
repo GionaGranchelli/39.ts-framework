@@ -10,6 +10,7 @@ function isNeutralino() {
 export async function initBridge() {
     try {
         if (isNeutralino()) {
+            // @ts-ignore
             const nl = await import('@neutralinojs/lib');
             Neutralino = nl;
             await nl.init();

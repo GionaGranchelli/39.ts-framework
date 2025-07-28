@@ -2,7 +2,7 @@ import { filesystem, os } from '@neutralinojs/lib';
 
 let basePath = '';
 
-async function ensureBasePath(){
+export async function ensureBasePath(){
     if (basePath) return basePath;
 
     try {

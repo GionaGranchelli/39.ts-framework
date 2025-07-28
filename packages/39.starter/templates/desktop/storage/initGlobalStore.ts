@@ -1,7 +1,6 @@
 import { createStore } from '39.ts/core/store';
 import type { StorageDriver } from '39.ts/storage/storageDriver';
 import { WebStorageDriver } from '39.ts/storage/webStorage';
-import { FileStorageDriver } from './fileStorage';
 
 let globalStore: Awaited<ReturnType<typeof createStore>> | null = null;
 

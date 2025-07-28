@@ -1,5 +1,6 @@
 packages:
   - packages/39.ts
   - packages/39.starter
+  - packages/39.ts-neutralino
   - packages/39.starter/templates/web
   - packages/39.starter/templates/desktop

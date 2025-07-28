@@ -14,11 +14,36 @@ Built with modern tooling like Vite, TypeScript, and Neutralino.js (for desktop)
 39.ts-framework/
 ├── packages/
 │   ├── 39.ts/                  # Core framework (UI, state, DOM, components)
+│   ├── 39.ts-neutralino/       # Neutralino.js desktop integration
 │   └── 39.starter/             # CLI + project templates (web & desktop)
 ├── examples/                   # Showcase apps
 ├── pnpm-workspace.yaml        # Monorepo configuration
 └── README.md                   # Main documentation
 ```
+
+---
+
+## Packages
+
+### 🎯 **39.ts** - Core Framework
+The main framework package providing:
+- Signal-based reactivity system
+- Declarative DOM primitives
+- Component composition utilities
+- Platform-agnostic state management
+
+### 🖥️ **39.ts-neutralino** - Desktop Integration
+TypeScript-native Neutralino.js integration providing:
+- NeutralinoProvider for desktop context management
+- useNeutralinoContext hook for accessing platform state
+- Type-safe Neutralino API bindings
+- Graceful fallbacks for web environments
+
+### 🛠️ **39.starter** - Project Scaffolding
+CLI tool for creating new projects with:
+- Interactive project setup
+- Web and desktop templates
+- Development workflow automation
 
 ---
 
@@ -29,16 +54,18 @@ Built with modern tooling like Vite, TypeScript, and Neutralino.js (for desktop)
 The entire state system is based on **signals** — reactive, lightweight, and fine-grained.
 
 ```ts
-import { signal } from '39.ts';
+import { createSignal } from '39.ts';
 
-const count = signal(0);
-count.set(count.get() + 1);
+const count = createSignal(0);
+count.set(count() + 1);
 ```
 
 Derived values can be created via `createDerived`:
 
 ```ts
-const double = createDerived(() => count.get() * 2, [count]);
+import { createDerived } from '39.ts';
+
+const double = createDerived(() => count() * 2);
 ```
 
 ### 2. **Declarative DOM API**
@@ -49,50 +76,40 @@ Instead of JSX or templates, DOM elements are constructed using composable, func
 import { Div, H1, Button } from '39.ts';
 
 const view = Div({ className: 'container' }, [
-  H1({}, ['Hello']),
-  Button({ onclick: () => alert('Clicked!') }, ['Click me'])
+  H1({}, ['39.ts Framework']),
+  Button({ 
+    onclick: () => count.set(count() + 1) 
+  }, [`Count: ${count()}`])
 ]);
 ```
 
-These are enhanced by `defaultClassNames` and utility-first styles.
+### 3. **Desktop Integration**
 
-### 3. **Stores**
-
-Stateful global stores with built-in persistence and plugin drivers:
+For desktop applications, use the neutralino integration:
 
 ```ts
-const store = await createStore({
-  key: 'appState',
-  initial: { theme: 'dark' },
-  persist: true,
-  driver: new WebStorageDriver()
-});
-```
+import { createApp } from '39.ts';
+import { NeutralinoProvider, useNeutralinoContext } from '39.ts-neutralino';
+import { App } from './components/App.js';
 
-### 4. **Routing System**
-
-Fully declarative, single-page router:
-
-```ts
-router.registerRoutes([
-  createRouter('/', () => HomePage(), 'Home', '🏠'),
-  createRouter('/settings', () => SettingsPage(), 'Settings', '⚙️')
-]);
-```
-
-Supports route components, names, icons, and live rerendering.
-
-### 5. **Component System**
-
-Components are plain functions returning DOM elements. Utility wrappers like `createComponent()` and `useForm()` exist for form state, modals, and reusable fields.
-
-```ts
-export function PasswordField(label: string) {
+function MyApp() {
+  const neutralino = useNeutralinoContext();
+  
   return Div({}, [
-    Label({}, [label]),
-    Input({ type: 'password' })
+    Div({}, [`Platform: ${neutralino.isNeutralino() ? 'Desktop' : 'Web'}`]),
+    App()
   ]);
 }
+
+function main() {
+  // Initialize Neutralino context
+  NeutralinoProvider();
+  
+  // Create and mount the app
+  createApp(MyApp());
+}
+
+main();
 ```
 
 ---
@@ -196,8 +213,88 @@ All components use default classes from `defaultClassNames.ts` and shared styles
 
 ---
 
-## Credits
+## Architecture Principles
 
-Created and maintained by **Giona Granchelli**
+### ✅ **What 39.ts IS**
+- **TypeScript-native**: First-class TypeScript support with full type safety
+- **Platform-agnostic**: Core framework works on web, desktop, and potentially mobile
+- **Signal-based**: Fine-grained reactivity without virtual DOM overhead
+- **Modular**: Tree-shakable exports, use only what you need
+- **Minimal**: Small bundle size, minimal abstractions
 
-MIT License · Lightweight UI framework for TypeScript lovers
+### ❌ **What 39.ts is NOT**
+- **Not React**: No JSX, no hooks, different mental model
+- **Not opinionated**: Doesn't enforce specific project structure
+- **Not framework-heavy**: No built-in routing, state management libs, etc.
+
+---
+
+## TypeScript Monorepo Setup
+
+This repository uses a shared `tsconfig.base.json` at the root, which is extended by each package's `tsconfig.json`. This ensures strict type checking, consistent module resolution, and IDE compatibility across all packages.
+
+- Each package uses `"composite": true` and `"references"` for project references, enabling incremental builds and type safety.
+- Path aliases (`39.ts`, `39.ts-neutralino`) are defined in the base config for clean imports.
+- Declaration files (`.d.ts`) and declaration maps are generated for better IDE support and cross-package type sharing.
+
+### Example: Package tsconfig.json
+```jsonc
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true
+  },
+  "references": [
+    { "path": "../39.ts" }
+  ]
+}
+```
+
+## Testing Strategy
+
+- All unit and integration tests use [Vitest](https://vitest.dev/).
+- Test files are colocated with source files (e.g., `core/signal.test.ts`).
+- No `__tests__` folders; tests live next to the code they verify.
+- Desktop-specific logic is only tested in the `39.ts-neutralino` package.
+
+## Architectural Boundaries
+
+- The core framework (`39.ts`) is platform-agnostic: no browser or Neutralino-specific logic.
+- Desktop integration is isolated in `39.ts-neutralino`.
+- The CLI (`39.starter`) scaffolds projects and injects platform-specific files only when needed.
+
+---
+
+## Contributing
+
+This is a monorepo managed with pnpm workspaces. See [Development Journal](./.github/DEVELOPMENT_JOURNAL.md) for detailed development progress and architectural decisions.
+
+### Development Setup
+
+1. Clone the repository
+2. Install dependencies: `pnpm install`
+3. Build packages: `pnpm build`
+4. Run tests: `pnpm test`
+
+### Package Development
+
+Each package can be developed independently:
+
+```bash
+# Work on core framework
+cd packages/39.ts && pnpm dev
+
+# Work on neutralino integration
+cd packages/39.ts-neutralino && pnpm dev
+
+# Work on CLI tool
+cd packages/39.starter && pnpm dev
+```
+
+---
+
+## License
+
+MIT License - see individual package.json files for details.

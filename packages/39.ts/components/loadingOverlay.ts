@@ -16,7 +16,7 @@ export function loadingOverlay() {
             return overlay;
         }, [visible]);
 
-        return Div([visibility]);
+        return Div({}, [visibility]);
     });
 
     return {

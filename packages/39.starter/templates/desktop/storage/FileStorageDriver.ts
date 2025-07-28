@@ -1,8 +1,11 @@
-import type {StorageDriver} from "39.ts/dist/storage/storageDriver";
+
+
 import {filesystem} from "@neutralinojs/lib";
+import {ensureBasePath} from "./fileStorage";
+import {StorageDriver} from "39.ts/dist/storage/storageDriver";
 
 export class FileStorageDriver extends StorageDriver {
-    async get(key) {
+    async get(key: any) {
         try {
             const dir = await ensureBasePath();
             const filePath = `${dir}/${key}.json`;
@@ -13,7 +16,7 @@ export class FileStorageDriver extends StorageDriver {
         }
     }
 
-    async set(key, value) {
+    async set(key: any, value: string) {
         try {
             const dir = await ensureBasePath();
             const filePath = `${dir}/${key}.json`;
@@ -24,7 +27,7 @@ export class FileStorageDriver extends StorageDriver {
         }
     }
 
-    async remove(key) {
+    async remove(key: any) {
         try {
             const dir = await ensureBasePath();
             const filePath = `${dir}/${key}.json`;

@@ -3,7 +3,12 @@ import {createSignal} from "./signal";
 import {Crumb, pushCrumb, resetCrumbs} from "../dom/breadcrumbs";
 
 
-export const currentRoute = createSignal<string>(location.pathname);
+const getInitialPath = () => {
+  if (typeof location !== 'undefined' && location.pathname) return location.pathname;
+  return '/'; // fallback for non-browser/test
+};
+
+export const currentRoute = createSignal<string>(getInitialPath());
 export const currentRouteParams = createSignal<Record<string, string>>({});
 
 export function createRouter(path: string, component: () => HTMLElement | Promise<HTMLElement>,

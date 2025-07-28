@@ -1,48 +1,51 @@
 // Re-export core signal system
-export * from "./core/createApp";
-export * from "./core/createDerived";
-export * from "./core/createEffect";
-export * from "./core/createStoreSelector";
-export * from "./core/devLogger";
-export * from "./core/eventBus";
-export * from "./core/router";
-export * from "./core/signal";
-export * from "./core/signalList";
-export * from "./core/store";
-export * from "./core/useLoadingOverlay";
+export * from "./core/createApp.js";
+export * from "./core/createDerived.js";
+export * from "./core/createEffect.js";
+export * from "./core/createStoreSelector.js";
+export * from "./core/devLogger.js";
+export * from "./core/eventBus.js";
+export * from "./core/router.js";
+export * from "./core/signal.js";
+export * from "./core/signalList.js";
+export * from "./core/store.js";
+export * from "./core/useLoadingOverlay.js";
 
 // Re-export DOM abstraction utilities
-export * from "./dom/breadcrumbs";
-export * from "./dom/className";
-export * from "./dom/defaultClassNames";
-export * from "./dom/h";
-export * from "./dom/html";
-export * from "./dom/loading";
-export * from "./dom/renderer";
+export * from "./dom/breadcrumbs.js";
+export * from "./dom/className.js";
+export * from "./dom/defaultClassNames.js";
+export * from "./dom/h.js";
+export * from "./dom/html.js";
+export * from "./dom/loading.js";
+export * from "./dom/renderer.js";
 
 // Re-export built-in components
-export * from "./components/breadcrumbs";
-export * from "./components/component";
-export * from "./components/InputFields";
-export * from "./components/link";
-export * from "./components/loadingOverlay";
-export * from "./components/modal";
-export * from "./components/PasswordField";
-export * from "./components/PhoneNumberField";
-export * from "./components/RichSelectField";
-export * from "./components/toast";
-export * from "./components/useForm";
-export * from "./components/layout/MainHeader";
-export * from "./components/layout/Layout";
-export * from "./components/layout/Sidebar";
-export * from "./components/layout/MainFooter";
+export * from "./components/breadcrumbs.js";
+export * from "./components/component.js";
+export * from "./components/InputFields.js";
+export * from "./components/link.js";
+export * from "./components/loadingOverlay.js";
+export * from "./components/modal.js";
+export * from "./components/PasswordField.js";
+export * from "./components/PhoneNumberField.js";
+export * from "./components/RichSelectField.js";
+export * from "./components/toast.js";
+export * from "./components/useForm.js";
+export * from "./components/layout/MainHeader.js";
+export * from "./components/layout/Layout.js";
+export * from "./components/layout/Sidebar.js";
+export * from "./components/layout/MainFooter.js";
 
 // types
-export * from "./@types/Bridge";
-export * from "./@types/Config";
-export * from "./@types/PlatformAdapter";
-export * from "./@types/state";
+export * from "./@types/Bridge.js";
+export * from "./@types/Config.js";
+export * from "./@types/PlatformAdapter.js";
+export { createSignal, setSignalLogger, signalLogFn } from './core/signal.js';
+export { Signal } from './@types/state.js';
+// …rest of your re-exports…
+
 // storage
-export * from "./storage/webStorage";
-export * from "./storage/storageDriver";
-export * from "./storage/NoopStorageDriver";
+export * from "./storage/webStorage.js";
+export * from "./storage/storageDriver.js";
+export * from "./storage/NoopStorageDriver.js";

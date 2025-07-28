@@ -33,12 +33,12 @@ export function Sidebar(router: Router): HTMLElement {
         return Li({}, [link]);
     });
     const nav = Nav({ className: 'layout-sidebar' },[Ul({}, items)]);
-    drawerOpen.subscribe( isOpen => {
+    drawerOpen.subscribe( (isOpen: boolean) => {
         if (isOpen) {
             nav.classList.add('open');
         } else {
             nav.classList.remove('open');
         }
     })
-    return Aside([nav]);
+    return Aside({}, [nav]);
 }
