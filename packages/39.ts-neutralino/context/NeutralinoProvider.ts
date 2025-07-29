@@ -82,10 +82,14 @@ function getNeutralinoAPI(): NeutralinoAPI | null {
  */
 export function useNeutralinoContext(): NeutralinoContextValue {
   const state = neutralinoSignal.get();
+
   return {
     ...state,
-    refresh: () => NeutralinoProvider().refresh(),
-    isNeutralinoAvailable,
-    api: getNeutralinoAPI,
+    refresh: () => {
+      const provider = NeutralinoProvider();
+      provider.refresh();
+    },
+    isNeutralinoAvailable: () => isNeutralinoAvailable(),
+    api: () => getNeutralinoAPI()
   };
 }

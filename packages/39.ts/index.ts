@@ -4,7 +4,7 @@ export { createDerived } from './core/createDerived.js';
 export { createEffect } from './core/createEffect.js';
 export { eventBus } from './core/eventBus.js';
 export { createApp } from './core/createApp.js';
-export { router, createRouter, navigateTo } from './core/router.js';
+export { router, createRouter, navigateTo, Router, createRoute, Route, currentRoute, currentRouteParams, useRouteParams } from './core/router.js';
 export { createStore, createStoreSelector } from './core/store.js';
 export { createSignalList } from './core/signalList.js';
 export { bind } from './core/bind.js';
