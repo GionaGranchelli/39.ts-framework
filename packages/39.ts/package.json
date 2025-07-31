@@ -17,6 +17,14 @@
       "import": "./dist/core/signal.js",
       "types": "./dist/core/signal.d.ts"
     },
+    "./core/signals": {
+      "import": "./dist/core/signals/index.js",
+      "types": "./dist/core/signals/index.d.ts"
+    },
+    "./core/signals/batchUpdates": {
+      "import": "./dist/core/signals/batchUpdates.js",
+      "types": "./dist/core/signals/batchUpdates.d.ts"
+    },
     "./core/createEffect": {
       "import": "./dist/core/createEffect.js",
       "types": "./dist/core/createEffect.d.ts"

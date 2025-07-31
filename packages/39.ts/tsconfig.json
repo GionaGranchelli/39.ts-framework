@@ -17,6 +17,7 @@
     "*.ts",
     "core/**/*.ts",
     "dom/**/*.ts",
+    "navigation/**/*.ts",
     "components/**/*.ts",
     "storage/**/*.ts",
     "@types/**/*.ts"

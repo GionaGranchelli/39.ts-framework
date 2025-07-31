@@ -1,6 +1,6 @@
-import {A, Div, H1, Header, Img, Span} from "../../dom/html";
+import {A, Div, H1, Header, Span, renderVNode} from "../../dom/domSystem";
 import {MainHeaderProps} from "../../@types/MainHeaderProps";
-import {createDerived} from "../../core/createDerived";
+import {createDerived} from "../../core/reactiveSystem";
 import {createComponent} from "../component";
 
 
@@ -11,26 +11,22 @@ export function MainHeader(props: MainHeaderProps) {
             const theme = props.state.get().theme
             return theme === 'dark' ? '🌙' : '☀️';
             // @ts-ignore
-        }, [props.state])
-        const iconEl = Span({}, [icon.get()]);
-        icon.subscribe((value) => {
-            iconEl.textContent = value;
-        });
-        const el = Header({ className: 'layout-header' }, [
+        }, [props.state]);
+
+        return Header({ className: 'layout-header' }, [
             Div(),
             H1({ className: 'title' }, ['🚀 39.ts App']),
             Div({ className: 'switch-team-container' }, [
                 A({ className: 'switch-team-a',
-                    onclick: (event: MouseEvent) => {
+                    onclick: (event: Event) => {
                         event.preventDefault();
                         event.stopPropagation();
                         props.onThemeChange();
                     }}, [
-                    Img({ className: 'switch-team-avatar'},[]),
-                    iconEl
+                    Div({ className: 'switch-team-avatar'}),
+                    Span({}, [icon.get()])
                 ])
             ])
         ]);
-        return el;
-    })(props)
+    })(props);
 }

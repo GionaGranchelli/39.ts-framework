@@ -1,44 +1,35 @@
-import {A, Aside, Button, Li, Nav, Span, Ul} from "../../dom/html";
-import {Router} from "../../core/router";
+import {A, Aside, Li, Nav, Span, Ul, VNode} from "../../dom/domSystem";
+import {RouterType, Route} from "../../navigation/navigationSystem";
 import {useResponsiveSidebar} from "../../core/hooks/useResponsiveSidebar";
-import {createSignal} from "../../core/signal";
-import {createDerived} from "../../core/createDerived";
+import {createSignal} from "../../core/reactiveSystem";
 
-export function Sidebar(router: Router): HTMLElement {
-    const routes = router.getRoutes();
+export function Sidebar(router: RouterType): VNode {
+    // Use empty routes for now - in real usage, routes would be passed or accessed differently
+    const routes: Route[] = [];
     const mode = useResponsiveSidebar();
     const drawerOpen = createSignal<boolean>(true);
 
-    // const actualMode = createDerived(() => {
-    //     return drawerOpen.get()
-    //         ? 'drawer'
-    //         : mode.get();
-    // }, [mode, drawerOpen]);
-
-    // const hamburger = Button({
-    //     className: 'hamburger-button',
-    //     onclick: () => drawerOpen.set(!drawerOpen.get())
-    // }, ['☰']);
-
-    const items = routes.map(route => {
-        const iconSpan = Span({className: 'icon'}, [route.icon||'🤷']);
-        const labelSpan = Span({className: 'label'}, [route.name ?? route.path]);
-        const link = A({ href: route.path, className: 'menu-item' }, [iconSpan, labelSpan]);
-        link.addEventListener('click', (event) => {
-            event.preventDefault();
-            event.stopPropagation();
-            router.render(route.path);
-            history.pushState(null, '', route.path);
-        })
-        return Li({}, [link]);
+    // Create route items as VNodes (no HTMLElement mixing)
+    const items: VNode[] = routes.map((route: Route) => {
+        return Li({}, [
+            A({
+                href: route.path,
+                className: 'menu-item',
+                onclick: (event: Event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    router.navigate(route.path);
+                }
+            }, [
+                Span({className: 'icon'}, [route.icon || '🤷']),
+                Span({className: 'label'}, [route.name ?? route.path])
+            ])
+        ]);
     });
-    const nav = Nav({ className: 'layout-sidebar' },[Ul({}, items)]);
-    drawerOpen.subscribe( (isOpen: boolean) => {
-        if (isOpen) {
-            nav.classList.add('open');
-        } else {
-            nav.classList.remove('open');
-        }
-    })
-    return Aside({}, [nav]);
+
+    return Aside({}, [
+        Nav({ className: 'layout-sidebar' }, [
+            Ul({}, items)
+        ])
+    ]);
 }

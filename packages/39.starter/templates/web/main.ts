@@ -1,11 +1,14 @@
-import {createApp, eventBus, Layout, render, Store} from '39.ts';
+import {createApp, Layout, render, router, createSignal} from '39.ts';
 import {AppState, initGlobalStore} from './storage/initGlobalStore';
-import {router, routerView} from './router';
 import '39.ts/styles';
+import {Store} from "39.ts/core/store";
+import {routerView} from "./router";
 
+// Create a theme change signal instead of using the internal event bus
+const themeChangeSignal = createSignal(null);
 
 function handleThemeChange(store: Store<AppState>) {
-    eventBus.on("theme:change", _ => {
+    themeChangeSignal.subscribe(_ => {
         const theme = store.get('theme') || 'dark';
         if (theme === 'dark') {
             document.documentElement.setAttribute('data-theme', `light`);
@@ -35,7 +38,7 @@ function handleThemeChange(store: Store<AppState>) {
                     {
                         // @ts-ignore
                         state: store.state,
-                        onThemeChange : () => eventBus.emit("theme:change", null)
+                        onThemeChange : () => themeChangeSignal.set(Date.now()) // Trigger theme change
                     }
                 );
                 render(appContent);

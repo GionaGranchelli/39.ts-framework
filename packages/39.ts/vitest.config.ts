@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { defineConfig } from 'vitest/config';
 import * as path from 'path';
 import { resolve } from 'path';
@@ -5,19 +6,26 @@ import { resolve } from 'path';
 export default defineConfig({
   root: path.resolve(__dirname),
   test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: [],
     include: [
       'core/**/*.test.{ts,js}',
       'dom/**/*.test.{ts,js}',
       'components/**/*.test.{ts,js}',
       'storage/**/*.test.{ts,js}',
+      '**/*.test.ts'
     ],
     exclude: ['dist', 'node_modules'],
-    globals: true,
-    environment: 'jsdom',
-    watch: false,
     coverage: {
-      provider: 'v8',
       reporter: ['text', 'json', 'html'],
+      exclude: [
+        'node_modules/',
+        'dist/',
+        '**/*.d.ts',
+        '**/*.config.*',
+        'coverage/'
+      ]
     },
   },
   resolve: {
@@ -28,7 +36,7 @@ export default defineConfig({
   },
   esbuild: {
     // Ensure proper ESM handling
-    target: 'es2022',
+    target: 'node18',
     format: 'esm'
   }
 });

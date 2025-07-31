@@ -2,16 +2,47 @@ import { eventBus } from './eventBus.js';
 import { Signal } from '../@types/state.js';
 
 /**
+ * Batch system state - integrated directly into signal system
+ */
+let isBatching = false;
+let batchedEvents: Array<{ id: string; value: unknown }> = [];
+
+/**
  * Optional global logger hook for every signal change.
- * Tests will drive this via setSignalLogger().
  */
 export let signalLogFn: ((name: string, value: unknown) => void) | null = null;
 
-/**
- * Install (or clear) a logger callback.
- */
 export function setSignalLogger(fn: typeof signalLogFn): void {
     signalLogFn = fn;
+}
+
+// Export batch control functions
+export function setBatchingState(batching: boolean): void {
+  isBatching = batching;
+}
+
+export function getBatchingState(): boolean {
+  return isBatching;
+}
+
+export function getBatchedEventsCount(): number {
+  return batchedEvents.length;
+}
+
+export function addToBatch(id: string, value: unknown): void {
+  const existingIndex = batchedEvents.findIndex(event => event.id === id);
+  if (existingIndex !== -1) {
+    batchedEvents[existingIndex] = { id, value };
+  } else {
+    batchedEvents.push({ id, value });
+  }
+}
+
+export function flushBatch(): void {
+  for (const event of batchedEvents) {
+    eventBus.emit(event.id, event.value);
+  }
+  batchedEvents = [];
 }
 
 let signalIdCounter = 0;
@@ -21,10 +52,11 @@ export function createSignal<T>(initial: T): Signal<T> {
         throw new Error('Signal initial value cannot be undefined. Use null instead.');
     }
 
-    const id = `signal:${signalIdCounter++}`;
     let value = initial;
+    const signalId = `signal:${signalIdCounter++}`;
+    const listeners: Array<(val: T) => void> = [];
 
-    return {
+    const signal: Signal<T> = {
         get() {
             return value;
         },
@@ -33,32 +65,39 @@ export function createSignal<T>(initial: T): Signal<T> {
                 throw new Error('Signal value cannot be set to undefined. Use null instead.');
             }
 
-            const prev = value;
-
-            // only fire if truly changed
-            if (!Object.is(prev, newValue)) {
+            if (!Object.is(value, newValue)) {
                 value = newValue;
 
-                console.log("newValue");
-                console.log(newValue);
-
-                // 1) logger
+                // Log if logger is set
                 if (signalLogFn) {
-                    signalLogFn(id, newValue);
+                    signalLogFn(signalId, newValue);
                 }
-                // 2) subscribers
-                eventBus.emit(id, newValue);
+
+                // Emit change event (batched or immediate)
+                if (isBatching) {
+                    addToBatch(signalId, newValue);
+                } else {
+                    eventBus.emit(signalId, newValue);
+                }
+
+                // Notify direct subscribers
+                for (const listener of listeners) {
+                    listener(newValue);
+                }
             }
         },
-        subscribe(listener) {
-            if (typeof listener !== 'function') {
-                throw new Error('Signal subscribe() requires a function listener');
-            }
-            eventBus.on(id, listener);
-            // return unsubscribe
+        subscribe(listener: (val: T) => void) {
+            listeners.push(listener);
+
+            // Return unsubscribe function
             return () => {
-                eventBus.off(id, listener);
+                const index = listeners.indexOf(listener);
+                if (index > -1) {
+                    listeners.splice(index, 1);
+                }
             };
         }
     };
+
+    return signal;
 }

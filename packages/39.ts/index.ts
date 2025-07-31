@@ -1,10 +1,118 @@
-// Core Framework - Signal System
-export { createSignal, setSignalLogger, signalLogFn } from './core/signal.js';
-export { createDerived } from './core/createDerived.js';
-export { createEffect } from './core/createEffect.js';
-export { eventBus } from './core/eventBus.js';
+// ============================================================================
+// 39.ts Framework - Clean Architecture (Post-Consolidation)
+// ============================================================================
+
+// Core Reactive System (Consolidated - No More Circular Dependencies!)
+export {
+  // Signal primitives
+  createSignal,
+  createDerived,
+  createEffect,
+
+  // Batch operations (ST-006 Enhanced Features)
+  batch,
+  isBatchingActive,
+  getBatchSize,
+
+  // Memory management
+  getActiveEffectCount,
+  cleanupAllEffects,
+  untracked,
+
+  // Signal utilities
+  setSignalLogger,
+  signalLogFn,
+
+  // Advanced signal functions (ST-006)
+  getEffectStats,
+  createComputed,
+  createValidatedSignal,
+  createPersistedSignal,
+  createDebouncedSignal,
+  createResource,
+
+  // Types
+  Effect,
+  Resource,
+  ResourceOptions
+} from './core/reactiveSystem.js';
+
+// DOM System (Consolidated - Virtual + Direct DOM)
+export {
+  // DOM adapters
+  setDOMAdapter,
+  getDOMAdapter,
+  webDOMAdapter,
+  noopDOMAdapter,
+
+  // Virtual DOM
+  h,
+  renderVNode,
+  html,
+
+  // Direct DOM (high-performance)
+  bindSignalToDOM,
+  createElement,
+
+  // Rendering
+  render,
+  append,
+
+  // Element creators
+  Div, Span, Button, Input, H1, H2, H3, P, A, Ul, Li,
+  Form, Label, Select, Option, Textarea, Section, Article,
+  Header, Footer, Nav, Main, Aside,
+
+  // Memory management
+  cleanupAllDOMBindings,
+  getActiveDOMBindingCount,
+
+  // Types
+  ElementProps,
+  Children,
+  EventHandler,
+  VNode,
+  DOMBinding
+} from './dom/domSystem.js';
+
+// Navigation System (Consolidated - Router + Breadcrumbs)
+export {
+  // Router
+  Router,
+  router,
+  createRoute,
+  navigateTo,
+  goBack,
+  goForward,
+  replacePath,
+
+  // Route state
+  currentRoute,
+  currentRouteParams,
+  useRouteParams,
+  useCurrentRoute,
+  navigationState,
+
+  // Breadcrumbs
+  useCrumbs,
+  pushCrumb,
+  resetCrumbs,
+  removeCrumb,
+  navigateToCrumb,
+
+  // Utilities
+  generatePath,
+  isCurrentRoute,
+  extractParams,
+
+  // Types
+  Route,
+  Crumb,
+  NavigationState
+} from './navigation/navigationSystem.js';
+
+// Independent Systems (No Circular Dependencies)
 export { createApp } from './core/createApp.js';
-export { router, createRouter, navigateTo, Router, createRoute, Route, currentRoute, currentRouteParams, useRouteParams } from './core/router.js';
 export { createStore, createStoreSelector } from './core/store.js';
 export { createSignalList } from './core/signalList.js';
 export { bind } from './core/bind.js';
@@ -13,89 +121,16 @@ export { useLoadingOverlay } from './core/useLoadingOverlay.js';
 // Types
 export { Signal } from './@types/state.js';
 
-// NEW: High-Performance Direct DOM System
+// Component System
+export * from './components/index.js';
 export {
-  setDirectDOMAdapter,
-  getDirectDOMAdapter,
-  webDirectDOMAdapter,
-  noopDirectDOMAdapter,
-  createDOMBinding,
-  cleanupDOMBindings,
-  createBoundTextNode,
-  bindSignalToProperty
-} from './dom/directDOM.js';
+  createComponent,
+  createVNodeComponent,
+  createDOMComponent,
+  Component,
+  ComponentWithProps,
+  ComponentContext
+} from './components/component.js';
 
-export {
-  createDirectElement,
-  Div,
-  Span,
-  Button,
-  Input,
-  Form,
-  Label,
-  H1, H2, H3,
-  P,
-  A,
-  Img,
-  Ul, Li,
-  Section,
-  Article,
-  Header,
-  Footer,
-  Nav,
-  Main,
-  Table, Tr, Td, Th, Thead, Tbody,
-  Select,
-  Option,
-  Textarea,
-  cleanupElement
-} from './dom/directElements.js';
-
-export {
-  renderDirect,
-  appendDirect,
-  replaceDirect,
-  createReactiveContainer,
-  batchDOMUpdates,
-  createDirectFragment
-} from './dom/directRenderer.js';
-
-// Legacy DOM System (Backward Compatibility)
-export { h, setDOMAdapter, webDOMAdapter, noopDOMAdapter } from './dom/h.js';
-export { render, append } from './dom/renderer.js';
-export { html } from './dom/html.js';
-
-// DOM Utilities
-export * from './dom/breadcrumbs.js';
-export * from './dom/className.js';
-export * from './dom/defaultClassNames.js';
-export * from './dom/loading.js';
-
-// Built-in Components
-export * from './components/breadcrumbs.js';
-export * from './components/component.js';
-export * from './components/InputFields.js';
-export * from './components/link.js';
-export * from './components/loadingOverlay.js';
-export * from './components/modal.js';
-export * from './components/PasswordField.js';
-export * from './components/PhoneNumberField.js';
-export * from './components/RichSelectField.js';
-export * from './components/toast.js';
-export * from './components/useForm.js';
-
-// Layout Components (if they exist)
-export * from './components/layout/MainHeader.js';
-export * from './components/layout/Layout.js';
-export * from './components/layout/Sidebar.js';
-export * from './components/layout/MainFooter.js';
-
-// Storage
-export * from './storage/webStorage.js';
-export * from './storage/storageDriver.js';
-export * from './storage/NoopStorageDriver.js';
-
-// Types
-export * from './@types/Bridge.js';
-export * from './@types/Config.js';
-export * from './@types/PlatformAdapter.js';
+// Storage System
+export * from './storage/index.js';
