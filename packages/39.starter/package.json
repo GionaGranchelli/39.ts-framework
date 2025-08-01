@@ -1,0 +1,37 @@
+{
+  "name": "39.ts-starter",
+  "version": "0.1.0",
+  "description": "Official CLI for 39.ts to scaffold new projects and pages.",
+  "type": "module",
+  "bin": {
+    "39.ts": "./bin/39.ts"
+  },
+  "scripts": {
+    "dev": "tsx bin/39.ts init",
+    "start": "tsx bin/39.ts",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "prompts": "^2.4.2"
+  },
+  "devDependencies": {
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.0",
+    "@types/node": "^22.13.14",
+    "@types/prompts" : "^2.4.9"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "cli",
+    "typescript",
+    "scaffold",
+    "starter",
+    "neutralino",
+    "vite",
+    "framework"
+  ],
+  "license": "MIT",
+  "author": "Giona Granchelli"
+}

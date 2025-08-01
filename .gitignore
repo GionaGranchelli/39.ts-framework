@@ -1,0 +1,16 @@
+/node_modules/
+/.idea/
+/.github/
+/packages/39.starter/dist/
+/packages/39.starter/node_modules/
+/packages/39.ts/dist/
+/packages/39.ts/node_modules/
+/packages/39.ts-neutralino/dist/
+/packages/39.ts-neutralino/node_modules/
+/packages/39.starter/templates/desktop/dist/
+/packages/39.starter/templates/desktop/node_modules/
+/packages/39.starter/templates/web/dist/
+/packages/39.starter/templates/web/node_modules/
+/packages/39.ts/**/*.d.ts
+/packages/39.ts/**/*.d.ts.map
+/packages/39.ts/**/*.d.js
