@@ -15,5 +15,6 @@
 /packages/39.ts/**/**/*.d.ts
 /packages/39.ts/**/*.d.ts.map
 /packages/39.ts/**/**/*.d.ts.map
-/packages/39.ts/**/*.d.js
-/packages/39.ts/**/**/.d.js
+/packages/39.ts/**/*.js
+/packages/39.ts/**/**/*.js
+/packages/39.starter/**/**/*.js
