@@ -1,0 +1,57 @@
+{
+  "name": "39.ts-neutralino",
+  "version": "0.1.0",
+  "description": "TypeScript-native Neutralino.js integration for the 39.ts framework",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./context": {
+      "types": "./dist/context/index.d.ts",
+      "import": "./dist/context/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:run": "vitest run",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "39.ts": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^3.2.4",
+    "@vitest/ui": "^3.2.4"
+  },
+  "peerDependencies": {
+    "@neutralinojs/lib": "^5.0.0"
+  },
+  "keywords": [
+    "neutralino",
+    "desktop",
+    "typescript",
+    "framework",
+    "39.ts"
+  ],
+  "author": "39.ts Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/39-ts/39.ts-framework",
+    "directory": "packages/39.ts-neutralino"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "name": "39.ts-framework",
+  "version": "0.1.0",
+  "private": true,
+  "description": "TypeScript-native UI framework with desktop application support",
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "test:run": "pnpm -r test:run",
+    "dev": "pnpm -r dev",
+    "clean": "pnpm -r clean",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "eslint packages/*/src --ext .ts",
+    "format": "prettier --write packages/*/src/**/*.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@vitest/ui": "^3.2.4",
+    "eslint": "^8.0.0",
+    "jsdom": "^23.0.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^3.2.4"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "packageManager": "pnpm@8.15.0"
+}

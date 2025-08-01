@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "declaration": true,
+    "outDir": "dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "39.ts": [
+        "./packages/39.ts/index.ts"
+      ],
+      "39.ts/*": [
+        "./packages/39.ts/*"
+      ],
+      "39.ts-neutralino": [
+        "./packages/39.ts-neutralino/index.ts"
+      ],
+      "39.ts-neutralino/*": [
+        "./packages/39.ts-neutralino/*"
+      ]
+    },
+    "typeRoots": [
+      "./node_modules/@types",
+      "./packages/*/node_modules/@types"
+    ]
+  },
+  "include": [
+    "packages/*/src/**/*",
+    "packages/*/**/*.ts",
+    "packages/*/**/*.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.test.ts",
+    "**/*.spec.ts"
+  ]
+}

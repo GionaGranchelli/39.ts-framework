@@ -1,0 +1,167 @@
+
+:root {
+
+    --color-bg: #f9f9f9;
+    --color-surface: #ffffff;
+    --sidebar-bg: #6b7280;
+    --color-text: #1a1a1a;
+    --color-muted: #6b7280;
+    --color-accent: #4f46e5;
+    --color-border: #e5e7eb;
+
+    /* Radius */
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.12);
+
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-base: 0.3s ease;
+    --transition-slow: 0.5s ease;
+}
+
+/*@media (prefers-color-scheme: dark) {*/
+/*    :root {*/
+/*        --color-bg: #121212;*/
+/*        --color-surface: #1e1e1e;*/
+/*        --color-text: #f0f0f0;*/
+/*        --color-muted: #9ca3af;*/
+/*        --color-accent: #818cf8;*/
+/*        --color-border: #2c2c2c;*/
+/*    }*/
+/*}*/
+
+html[data-theme="dark"] {
+    --color-bg: #121212;
+    --color-surface: #1e1e1e;
+    --sidebar-bg: #85a6a6;
+    --color-text: #f0f0f0;
+    --color-muted: #9ca3af;
+    --color-accent: #818cf8;
+    --color-border: #2c2c2c;
+}
+/* Resets & Globals */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html {
+    font-size: 16px;
+    font-family: system-ui, sans-serif;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+}
+a {
+    color: inherit;
+    text-decoration: none;
+}
+button, input, select, textarea {
+    font: inherit;
+}
+img, svg {
+    max-width: 100%;
+    display: block;
+}
+
+/* Utility Classes */
+.rounded-sm { border-radius: var(--radius-sm); }
+.rounded { border-radius: var(--radius-md); }
+.rounded-lg { border-radius: var(--radius-lg); }
+
+.shadow-sm { box-shadow: var(--shadow-sm); }
+.shadow { box-shadow: var(--shadow-md); }
+.shadow-lg { box-shadow: var(--shadow-lg); }
+
+.transition { transition: all var(--transition-base); }
+/*.fade-enter { opacity: 0; }*/
+/*.fade-enter-active { opacity: 1; transition: opacity var(--transition-slow); }*/
+
+/* Default Class Mapping Styles */
+.default-div { padding: 1rem; }
+.default-p { line-height: 1.6; color: var(--color-muted); }
+.default-button { padding: 0.5rem 1rem; border-radius: var(--radius-md); border: none; cursor: pointer; background-color: var(--color-accent); color: #fff; transition: background var(--transition-fast); }
+.default-button:hover { background-color: darken(var(--color-accent), 10%); }
+.default-h1, .default-h2, .default-h3 {
+    font-weight: bold;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+}
+.default-h1 { font-size: 2rem; }
+.default-h2 { font-size: 1.5rem; }
+.default-h3 { font-size: 1.25rem; }
+.default-header { padding: 1rem; background: var(--color-surface); box-shadow: var(--shadow-sm); }
+.default-section { padding: 2rem; }
+.default-span { color: var(--color-muted); }
+.default-input, .input {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    transition: border var(--transition-fast), box-shadow var(--transition-fast);
+}
+.default-input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+}
+.default-label { margin-bottom: 0.25rem; display: block; color: var(--color-muted); font-size: 0.875rem; }
+.default-aside.layout-sidebar {
+    background: var(--color-surface);
+    padding: 1rem;
+    box-shadow: var(--shadow-md);
+    min-width: 200px;
+    height: 100vh;
+    border-right: 1px solid var(--color-border);
+}
+.default-nav {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--color-surface);
+}
+.menu-item {
+    display: block;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-sm);
+    transition: background var(--transition-fast);
+    color: var(--color-text);
+}
+.menu-item:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+/* Example Styled Components */
+.button {
+    composes: default-button;
+}
+.card {
+    background: var(--color-surface);
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+}
+.input {
+    composes: default-input;
+    width: 100%;
+}
+
+/* =====================
+   Page Transition: Fade
+===================== */
+
+.fade-enter {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity var(--transition-slow), transform var(--transition-slow);
+}
+
+.fade-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+}

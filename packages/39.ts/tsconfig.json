@@ -1,0 +1,33 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "declaration": true,
+    "declarationMap": true,
+    "outDir": "dist",
+    "rootDir": ".",
+    "strict": true,
+    "composite": true,
+    "allowImportingTsExtensions": false,
+    "noEmit": false
+  },
+  "include": [
+    "*.ts",
+    "core/**/*.ts",
+    "dom/**/*.ts",
+    "navigation/**/*.ts",
+    "components/**/*.ts",
+    "storage/**/*.ts",
+    "@types/**/*.ts"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules",
+    "**/*.test.ts",
+    "**/*.bench.ts",
+    "vitest.config.ts",
+    "../39.starter/**"
+  ]
+}
