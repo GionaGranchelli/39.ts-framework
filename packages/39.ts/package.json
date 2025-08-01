@@ -1,0 +1,93 @@
+{
+  "name": "39.ts",
+  "version": "0.1.0",
+  "description": "A lightweight TypeScript-native UI framework with signal-based state and DOM primitives.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./core/store": {
+      "import": "./dist/core/store.js",
+      "types": "./dist/core/store.d.ts"
+    },
+    "./core/signal": {
+      "import": "./dist/core/signal.js",
+      "types": "./dist/core/signal.d.ts"
+    },
+    "./core/signals": {
+      "import": "./dist/core/signals/index.js",
+      "types": "./dist/core/signals/index.d.ts"
+    },
+    "./core/signals/batchUpdates": {
+      "import": "./dist/core/signals/batchUpdates.js",
+      "types": "./dist/core/signals/batchUpdates.d.ts"
+    },
+    "./core/createEffect": {
+      "import": "./dist/core/createEffect.js",
+      "types": "./dist/core/createEffect.d.ts"
+    },
+    "./core/createDerived": {
+      "import": "./dist/core/createDerived.js",
+      "types": "./dist/core/createDerived.d.ts"
+    },
+    "./core/eventBus": {
+      "import": "./dist/core/eventBus.js",
+      "types": "./dist/core/eventBus.d.ts"
+    },
+    "./core/router": {
+      "import": "./dist/core/router.js",
+      "types": "./dist/core/router.d.ts"
+    },
+    "./dom/h": {
+      "import": "./dist/dom/h.js",
+      "types": "./dist/dom/h.d.ts"
+    },
+    "./dom/renderer": {
+      "import": "./dist/dom/renderer.js",
+      "types": "./dist/dom/renderer.d.ts"
+    },
+    "./components/toast": {
+      "import": "./dist/components/toast.js",
+      "types": "./dist/components/toast.d.ts"
+    },
+    "./styles": "./dist/styles/index.css",
+    "./styles/base": "./dist/styles/base.css",
+    "./styles/layout": "./dist/styles/layout.css",
+    "./styles/form": "./dist/styles/form.css",
+    "./styles/utility": "./dist/styles/utility.css"
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.json && cp -r styles dist/styles",
+    "clean": "rm -rf dist && mkdir dist",
+    "prepare": "npm run clean && npm run build",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "typescript",
+    "ui-framework",
+    "dom",
+    "signals",
+    "reactivity",
+    "minimal"
+  ],
+  "author": "Giona Granchelli",
+  "license": "MIT",
+  "files": [
+    "dist",
+    "core",
+    "components",
+    "html",
+    "index.ts"
+  ],
+  "devDependencies": {
+    "@vitest/coverage-v8": "^3.2.4",
+    "@vitest/ui": "^3.2.4",
+    "typescript": "^5.3.0",
+    "vitest": "^3.2.4"
+  }
+}

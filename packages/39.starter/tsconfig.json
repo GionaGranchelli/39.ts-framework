@@ -1,0 +1,32 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "outDir": "dist",
+    "rootDir": "./",
+    "baseUrl": "."
+  },
+  "include": [
+    "commands/**/*",
+    "bin/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "templates",
+    "dist"
+  ],
+  "references": [
+    {
+      "path": "../39.ts"
+    }
+  ]
+}

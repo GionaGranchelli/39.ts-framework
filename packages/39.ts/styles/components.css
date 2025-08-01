@@ -1,0 +1,122 @@
+/* =====================
+   components.css
+   Component-level styling: buttons, cards, nav, menu-items
+===================== */
+
+/* Button Styles */
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    background-color: var(--color-accent);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    cursor: pointer;
+    transition: background var(--transition-fast), transform var(--transition-fast);
+    box-shadow: var(--shadow-sm);
+}
+
+.button:hover {
+    background-color: #4338ca;
+    transform: translateY(-1px);
+}
+
+.button:active {
+    transform: translateY(0);
+}
+
+.button:disabled {
+    background-color: var(--color-border);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Card Component */
+.card {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 1.5rem;
+    transition: box-shadow var(--transition-base);
+}
+
+.card:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+/* Menu Items */
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-sm);
+    color: var(--color-text);
+    transition: background var(--transition-fast), transform var(--transition-fast);
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.menu-item .icon {
+    flex-shrink: 0;
+    font-size: 1.1rem;
+}
+
+.menu-item .label {
+    flex-grow: 1;
+    font-size: 0.95rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.menu-item:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    transform: translateX(2px);
+}
+
+.menu-item:active {
+    background-color: rgba(0, 0, 0, 0.08);
+}
+
+.hamburger-button {
+    /*position: fixed;*/
+    /*top: 10px;*/
+    /*left: 10px;*/
+    background: var(--sidebar-bg);
+    border-radius: 33%;
+    color: white;
+    border: none;
+    padding: 8px;
+    z-index: 2000;
+    font-size: 20px;
+}
+/* Navigation */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.navbar .nav-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.navbar .nav-links a {
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-sm);
+    transition: background var(--transition-fast);
+}
+
+.navbar .nav-links a:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
