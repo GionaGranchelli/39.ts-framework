@@ -9,3 +9,4 @@ export * from './Layout.js';
 export * from './MainHeader.js';
 export * from './MainFooter.js';
 export * from './Sidebar.js';
+export { MenuBar, createMenuStructure, applyMenuBarTheme } from './MenuBar.js';

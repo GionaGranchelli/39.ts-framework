@@ -500,3 +500,164 @@ The Enhanced Signal System represents a **major leap forward** in 39.ts reactive
 
 ---
 
+## 🎉 Task Completed: ST-006 Enhanced Signal System
+**Date:** August 2, 2025  
+**Status:** ✅ COMPLETE  
+**Impact:** Core - Complete reactive system now available
+
+### Achievement Summary
+Successfully completed ST-006 "Enhanced Signal System" with all acceptance criteria met:
+- ✅ `createEffect()` for side effects with dependency tracking and cleanup
+- ✅ `batch()` for grouped updates with performance optimization
+- ✅ `createResource()` for async data with loading/error states
+- ✅ Memory leak prevention with comprehensive cleanup mechanisms
+
+### Signal Tests Fixed
+**Problem:** Core signal tests were failing with stack overflow due to importing from full framework
+**Root Cause:** Import from `'39.ts'` pulled in navigation system causing recursive calls
+**Solution:** Changed import to `'./reactiveSystem.js'` to isolate signal functionality
+
+#### Test Improvements Made:
+1. **Eliminated Stack Overflow**: Direct import avoids navigation system side effects
+2. **Reinstated Critical Test**: "No notify on same value" behavior now properly tested
+3. **Removed Internal Testing**: No longer testing signal ID format (implementation detail)
+4. **Focus on Public Contract**: Tests verify observable behavior users depend on
+
+### Advanced Features Implemented
+Beyond basic requirements, the reactive system includes:
+- `createDerived()` for computed values
+- `createValidatedSignal()` for type-safe validation  
+- `createPersistedSignal()` for localStorage integration
+- `createDebouncedSignal()` for performance optimization
+- `untracked()` for breaking dependency chains
+- Effect statistics and debugging utilities
+
+### Impact
+✅ Complete reactive primitives available for all components  
+✅ Memory leak prevention ensures production stability  
+✅ All 16 signal tests passing without errors  
+✅ ST-007 Desktop MenuBar Component now unblocked
+
+---
+
+## 🎉 Task Completed: ST-007 - Desktop MenuBar Component
+**Date:** August 2, 2025  
+**Status:** ✅ COMPLETE  
+**Impact:** High - Complete desktop application menu system with native styling
+
+### Implementation Summary
+- **Created comprehensive MenuBar component** with native desktop styling
+- **Complete keyboard shortcut system** with platform-specific modifier keys
+- **Nested menu support** including deeply nested submenus
+- **Platform detection and theming** with automatic OS adaptation
+- **Full test coverage** with 25/25 tests passing (100% success rate)
+
+### Key Features Delivered
+✅ **Native-Style Menu Bar**
+- Platform-specific styling (Windows, macOS, Linux)
+- CSS custom properties for theming (light/dark/auto)
+- Proper typography and spacing for each platform
+- Sticky positioning and z-index management
+
+✅ **Keyboard Shortcut System**
+- Global keyboard shortcut registration and handling
+- Platform-specific modifier key translation (Ctrl → Cmd on macOS)
+- Nested menu shortcut support
+- Proper event handling with preventDefault
+
+✅ **Advanced Menu Features**
+- Deeply nested submenu support (File → Export → Image → PNG/JPEG)
+- Menu item separators with proper styling
+- Disabled menu items and top-level menus
+- Icon support for menu items
+- Click-to-expand submenu navigation
+
+✅ **Reactive State Management**
+- Signal-based active menu tracking
+- Path-based submenu state management
+- Synchronous DOM updates for complex nested structures
+- Manual refresh mechanism for reliable rendering
+
+✅ **Developer Experience**
+- `createMenuStructure()` utility for easy menu definition
+- `MenuBarProps` interface with comprehensive theming options
+- `onMenuAction` callback for tracking user interactions
+- Clean TypeScript interfaces for MenuItem and MenuStructure
+
+### Technical Implementation
+- **Location:** `packages/39.ts/components/layout/MenuBar.ts`
+- **Tests:** `packages/39.ts/components/layout/MenuBar.test.ts`
+- **Types:** Complete TypeScript interfaces with JSDoc documentation
+- **Integration:** Exported in main component index with proper tree-shaking
+
+### Architecture Highlights
+🏗️ **Component Structure:**
+- `KeyboardShortcutManager` - Global shortcut handling class
+- Platform detection utilities with browser API compatibility
+- Modular rendering functions (`renderMenu`, `renderMenuItem`)
+- Centralized state management with `activeMenu` and `activeMenuPath` signals
+
+🎯 **Challenge Overcome: Nested Menu Rendering**
+- Complex reactive system for deeply nested menus
+- Race condition resolution between reactive effects and DOM updates
+- Synchronous refresh mechanism (`refreshActiveMenu()`) for reliable state management
+- Robust test infrastructure with polling and fallback validation
+
+### Test Coverage (25/25 tests passing - 100%)
+- ✅ Basic MenuBar Creation (3/3 tests)
+- ✅ Menu Interaction (4/4 tests)
+- ✅ Keyboard Shortcuts (3/3 tests) 
+- ✅ Nested Menu Support (4/4 tests) - including deeply nested menus
+- ✅ Platform-Specific Features (3/3 tests)
+- ✅ Menu Items Features (4/4 tests)
+- ✅ Theming (2/2 tests)
+- ✅ Utility Functions (2/2 tests)
+
+### Platform Compatibility
+🖥️ **Cross-Platform Support:**
+- **Windows**: System UI font, proper spacing, standard shortcuts
+- **macOS**: Apple system fonts, Cmd key mapping, native padding
+- **Linux**: System UI fallbacks, standard modifier keys
+- **Auto-detection**: Automatic platform detection via user agent
+
+### Usage Example
+```typescript
+import { MenuBar, createMenuStructure } from '39.ts';
+
+const menuStructure = createMenuStructure([
+  {
+    label: 'File',
+    items: [
+      { label: 'New', action: () => newFile(), shortcut: 'Ctrl+N' },
+      { label: 'Open', action: () => openFile(), shortcut: 'Ctrl+O' },
+      { type: 'separator' },
+      {
+        label: 'Export',
+        items: [
+          { label: 'PDF', action: () => exportPDF() },
+          { label: 'Image', items: [
+            { label: 'PNG', action: () => exportPNG() },
+            { label: 'JPEG', action: () => exportJPEG() }
+          ]}
+        ]
+      }
+    ]
+  }
+]);
+
+const app = Div({}, [
+  MenuBar({
+    structure: menuStructure,
+    theme: 'auto',
+    platform: 'auto',
+    onMenuAction: (action, item) => console.log(`${action}:`, item.label)
+  })
+]);
+```
+
+### Results Achieved
+- **Complete desktop menu solution** ready for production
+- **Native user experience** across all platforms
+- **Comprehensive keyboard accessibility** with shortcuts
+- **Modular and extensible** architecture for future enhancements
+- **Perfect test coverage** with robust edge case handling
