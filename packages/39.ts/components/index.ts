@@ -23,4 +23,21 @@ export * from './loadingOverlay.js';
 // export * from './link.js';
 
 // Layout components
-export * from './layout/index.js';
+export { MenuBar, createMenuStructure, applyMenuBarTheme } from './layout/MenuBar.js';
+export { Toolbar, applyToolbarTheme } from './layout/Toolbar.js';
+
+// Layout component types
+export type {
+  MenuItem,
+  MenuStructure,
+  MenuBarProps,
+  KeyboardShortcut
+} from './layout/MenuBar.js';
+
+export type {
+  ToolbarItem,
+  ToolbarButton,
+  ToolbarSeparator,
+  ToolbarProps,
+  ToolbarOverflowState
+} from './layout/Toolbar.types.js';
