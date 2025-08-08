@@ -1,0 +1,26 @@
+/*
+ * Default styles for the FileDropZone component.
+ *
+ * The drop zone has a dashed border and neutral background by default. When
+ * files are dragged over the zone, the `dragging` class is added to provide
+ * a visual cue by changing the border style and background colour.
+ */
+
+.file-drop-zone {
+    box-sizing: border-box;
+    border: 2px dashed var(--fz-border-colour, #ced4da);
+    border-radius: 6px;
+    background-color: var(--fz-background, #f8f9fa);
+    padding: 20px;
+    text-align: center;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+    color: var(--fz-text-colour, #495057);
+    cursor: pointer;
+}
+
+.file-drop-zone.dragging {
+    border-style: solid;
+    border-color: var(--fz-active-border-colour, #0d6efd);
+    background-color: var(--fz-active-background, #e7f1ff);
+    color: var(--fz-active-text-colour, #0d6efd);
+}

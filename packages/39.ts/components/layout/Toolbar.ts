@@ -184,9 +184,9 @@ export function Toolbar(props: ToolbarProps): HTMLElement {
       title: item.tooltip || item.label,
       draggable: draggable && !disabled,
       onclick: () => handleItemClick(item),
-      ondragstart: (e) => handleDragStart(e, item),
+      ondragstart: (e: DragEvent) => handleDragStart(e, item),
       ondragover: handleDragOver,
-      ondrop: (e) => handleDrop(e, item),
+      ondrop: (e: DragEvent) => handleDrop(e, item),
       style: {
         display: 'flex',
         alignItems: 'center',

@@ -23,6 +23,7 @@ export * from './loadingOverlay.js';
 // export * from './link.js';
 
 // Layout components
+export { Layout } from './layout/Layout.js';
 export { MenuBar, createMenuStructure, applyMenuBarTheme } from './layout/MenuBar.js';
 export { Toolbar, applyToolbarTheme } from './layout/Toolbar.js';
 

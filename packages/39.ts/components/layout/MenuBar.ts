@@ -40,11 +40,17 @@
 
 import { createSignal, createEffect } from '../../core/reactiveSystem.js';
 import { Div, Span, Button } from '../../dom/directElements.js';
-import { useNeutralinoContext } from '../../../39.ts-neutralino/context/NeutralinoProvider.js';
 
 // ============================================================================
 // TYPE DEFINITIONS
 // ============================================================================
+
+// Platform context interface for dependency injection
+export interface PlatformContext {
+  isDesktop?: boolean;
+  appName?: string;
+  // Add other platform-specific properties as needed
+}
 
 export interface MenuItem {
   label?: string;
@@ -197,7 +203,6 @@ function parseShortcut(shortcut: string): { key: string; modifiers: string[] } {
 // ============================================================================
 
 export function MenuBar(props: MenuBarProps): HTMLElement {
-  const neutralinoContext = useNeutralinoContext();
   const platform = props.platform === 'auto' ? detectPlatform() : (props.platform || 'windows');
   const theme = createSignal(props.theme || 'auto');
   const activeMenu = createSignal<string | null>(null);
@@ -223,9 +228,9 @@ export function MenuBar(props: MenuBarProps): HTMLElement {
 
     structure.forEach((menu, menuIndex) => {
       menu.items.forEach((item, itemIndex) => {
-        if (item.shortcut && item.action) {
+        if (item.shortcut && item.action && item.label) { // Ensure label exists
           const { key, modifiers } = parseShortcut(item.shortcut);
-          const menuPath = [menu.label, item.label];
+          const menuPath = [menu.label, item.label].filter(Boolean); // Filter out undefined
 
           globalShortcutManager.register({
             key,
@@ -243,8 +248,8 @@ export function MenuBar(props: MenuBarProps): HTMLElement {
         }
 
         // Register shortcuts for nested items
-        if (item.items) {
-          registerNestedShortcuts(item.items, [menu.label, item.label], onMenuAction);
+        if (item.items && item.label) {
+          registerNestedShortcuts(item.items, [menu.label, item.label].filter(Boolean), onMenuAction);
         }
       });
     });
@@ -252,7 +257,7 @@ export function MenuBar(props: MenuBarProps): HTMLElement {
 
   function registerNestedShortcuts(items: MenuItem[], menuPath: string[], onMenuAction?: (action: string, item: MenuItem) => void): void {
     items.forEach(item => {
-      if (item.shortcut && item.action) {
+      if (item.shortcut && item.action && item.label) { // Ensure label exists
         const { key, modifiers } = parseShortcut(item.shortcut);
         const currentPath = [...menuPath, item.label];
 
@@ -271,7 +276,7 @@ export function MenuBar(props: MenuBarProps): HTMLElement {
         });
       }
 
-      if (item.items) {
+      if (item.items && item.label) {
         registerNestedShortcuts(item.items, [...menuPath, item.label], onMenuAction);
       }
     });
@@ -365,7 +370,8 @@ export function MenuBar(props: MenuBarProps): HTMLElement {
     }
 
     const hasSubmenu = item.items && item.items.length > 0;
-    const menuItemPath = [...menuPath, item.label];
+    // Only include label in path if it exists
+    const menuItemPath = item.label ? [...menuPath, item.label] : [...menuPath];
     const isOpen = isPathActive(menuItemPath);
 
     const container = Div({
@@ -402,7 +408,7 @@ export function MenuBar(props: MenuBarProps): HTMLElement {
         ] : []),
         Span({
           className: 'menu-item-label',
-          text: item.label
+          text: item.label || '' // Provide fallback for undefined
         })
       ]),
 
